@@ -5,7 +5,7 @@ class Card extends React.Component {
   constructor() {
     super();
     this.state={
-      face: false,
+      face: true,
     }  
     this.handleClick = this.handleClick.bind(this);
   }
@@ -38,11 +38,8 @@ class Card extends React.Component {
 const Content = styled.div`
   width: 4.5rem;
   height: 6rem;
-  background-color: grey;
   border: 2px solid black;
   margin: 0.7rem 0.1rem 0 0;
-  /* background-image: url(/images/stars.jpg); */
-  /* background-image: url(${({image}) => {return `/images/${image}.jpg`}}); */
   ${(props)=>{
     if (props.face) {
       return css`
@@ -54,6 +51,7 @@ const Content = styled.div`
       `
     }
   }}
+  background-color: grey;
   background-size: 4.5rem 6rem;
   @media(min-width: 375px) {
     width: 5.5rem;
