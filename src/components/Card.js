@@ -1,32 +1,13 @@
 import React from "react";
 import styled, {css} from "styled-components";
 
-class Card extends React.Component {
-  constructor() {
-    super();
-    this.state={
-      face: true,
-    }  
-    this.handleClick = this.handleClick.bind(this);
-  }
-  // turn over the card if it's not already turned and then turn back after 1500ms
-  handleClick() {
-    if (!this.state.face) {
-      this.setState((prevState)=>{
-        return {face: true};
-      });
-    }
-    setTimeout(() => {
-      this.setState({face: false});
-    }, 1500);
-  }
-
+class Card extends React.Component { 
   render() {
     return (
       <Content 
-        image={this.props.image}
-        face={this.state.face}
-        onClick={this.handleClick}
+        face={this.props.face}
+        value={this.props.value}
+        onClick={this.props.onClick}
       >
       </Content>
     );
@@ -43,7 +24,7 @@ const Content = styled.div`
   ${(props)=>{
     if (props.face) {
       return css`
-        background-image: url(${({image}) => {return `/images/${image}.jpg`}});
+        background-image: url(${({value}) => {return `/images/${value}.jpg`}});
       `
     } else {
       return css`
