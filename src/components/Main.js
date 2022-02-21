@@ -6,7 +6,20 @@ class Main extends React.Component {
   constructor() {
     super();
     this.state = {
-      initCardsArray: [],
+      initCardsArray: [
+        { id: 1, value: "building", face: true },
+        { id: 2, value: "coctail", face: true },
+        { id: 3, value: "red-carp", face: true },
+        { id: 4, value: "buddha", face: true },
+        { id: 5, value: "tree", face: true },
+        { id: 6, value: "whale", face: true },
+        { id: 7, value: "building", face: true },
+        { id: 8, value: "coctail", face: true },
+        { id: 9, value: "buddha", face: true },
+        { id: 10, value: "red-carp", face: true },
+        { id: 11, value: "tree", face: true },
+        { id: 12, value: "whale", face: true },
+      ],
       currentVal1: "",
       currentVal2: "",
       matchedCards: 0,
@@ -14,18 +27,15 @@ class Main extends React.Component {
     this.handleCardClick = this.handleCardClick.bind(this);
     this.compareCards = this.compareCards.bind(this);
     this.turnCard = this.turnCard.bind(this);
+    this.renderCards = this.renderCards.bind(this);
   }
   // set values of clicked cards and compare them
   handleCardClick(cardVal, face, id) {
-    this.setState({currentVal1: "33"})
-    console.log(this.state.currentVal1 === "", this.state.currentVal2);
-    console.log(cardVal, face, id);
     if (this.state.currentVal1 === "") {
       this.setState({ currentVal1: cardVal})
     } else if (this.state.currentVal2 === "") {
       this.setState({ currentVal2: cardVal });
     }
-    console.log(this.state.currentVal1, this.state.currentVal2);
     this.turnCard(face, id);
     this.compareCards(id);
   }
@@ -67,24 +77,22 @@ class Main extends React.Component {
     });
   }
 
+  renderCards() {
+    return this.state.initCardsArray.map((card) => {
+      return (
+        <Card
+          key={card.id}
+          id={card.id}
+          value={card.value}
+          face={card.face}
+          onClick={this.handleCardClick}
+        />
+      );
+    });
+  }
   // Set the array of cards before render them
   componentDidMount() {
-    this.setState({
-      initCardsArray: [
-        { id: 1, value: "building", face: true },
-        { id: 2, value: "coctail", face: true },
-        { id: 3, value: "red-carp", face: true },
-        { id: 4, value: "buddha", face: true },
-        { id: 5, value: "tree", face: true },
-        { id: 6, value: "whale", face: true },
-        { id: 7, value: "building", face: true },
-        { id: 8, value: "coctail", face: true },
-        { id: 9, value: "buddha", face: true },
-        { id: 10, value: "red-carp", face: true },
-        { id: 11, value: "tree", face: true },
-        { id: 12, value: "whale", face: true },
-      ],
-    });
+
     this.state.initCardsArray.sort(() => Math.random() - 0.5);
   }
 
@@ -93,17 +101,7 @@ class Main extends React.Component {
       <Container>
         {/* ************* CARDS ******* */}
         <div className="card-wrapper">
-          {this.state.initCardsArray.map((card) => {
-            return (
-              <Card
-                key={card.id}
-                id={card.id}
-                value={card.value}
-                face={card.face}
-                onClick={this.handleCardClick}
-              />
-            );
-          })}
+          {this.renderCards()}
         </div>
       </Container>
     );
