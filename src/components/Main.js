@@ -72,6 +72,7 @@ class Main extends React.Component {
       clearTimeout(this.turnCardTimer);
     }
     console.log('compareCards');
+    console.log(this.state.currentVal1);
     this.setState((prevState) => {
       return { ...prevState, currentVal1: "", currentVal2: "" };
     });
