@@ -16,18 +16,21 @@ class Main extends React.Component {
     this.turnCard = this.turnCard.bind(this);
   }
   // set values of clicked cards and compare them
-  handleCardClick(cardVal) {
-    console.log(cardVal);
+  handleCardClick(cardVal, face, id) {
+    this.setState({currentVal1: "33"})
+    console.log(this.state.currentVal1 === "", this.state.currentVal2);
+    console.log(cardVal, face, id);
     if (this.state.currentVal1 === "") {
-      this.setState({ currentVal1: cardVal });
+      this.setState({ currentVal1: cardVal})
     } else if (this.state.currentVal2 === "") {
       this.setState({ currentVal2: cardVal });
-      this.compareCards();
     }
+    console.log(this.state.currentVal1, this.state.currentVal2);
+    this.turnCard(face, id);
+    this.compareCards(id);
   }
-  // turn over the card if it's not already turned and then turn back after 1500ms
+  // turn over the card if it's not already turned
   turnCard(cardFace, id) {
-    console.log(cardFace, id);
     if (!cardFace) {
       let cards = this.state.initCardsArray.map((card) => {
         if (card.id === id) {
@@ -37,49 +40,49 @@ class Main extends React.Component {
         }
       });
       this.setState({ initCardsArray: cards });
+      // turn card back after 1500ms
+      this.turnCardTimer = setTimeout(() => {
+        let cards = this.state.initCardsArray.map((card) => {
+          if (card.id === id) {
+            return { ...card, face: false };
+          } else {
+            return card;
+          }
+        });
+        this.setState({ initCardsArray: cards });
+      }, 1500);
     }
-    setTimeout(() => {
-      let cards = this.state.initCardsArray.map((card) => {
-        if (card.id === id) {
-          return { ...card, face: false };
-        } else {
-          return card;
-        }
-      });
-      this.setState({ initCardsArray: cards });
-    }, 1500);
   }
-  // if cards values match increase number of matched cards and return the values back to ""
-  compareCards() {
+  // if cards values match increase number of matched cards and return the state values back to ""
+  compareCards(id) {
     if (this.state.currentVal1 === this.state.currentVal2) {
       this.setState((prevState) => {
         return { matchedCards: prevState.matchedCards + 1 };
       });
+      clearTimeout(this.turnCardTimer);
     }
-    this.setState(({ currentVal1, currentVal2 }) => {
-      return { currentVal1, currentVal2 };
+    console.log('compareCards');
+    this.setState((prevState) => {
+      return { ...prevState, currentVal1: "", currentVal2: "" };
     });
-    console.log(this.state.matchedCards);
   }
-  componentDidUpdate() {
-    console.log(this.state.currentVal1, this.state.currentVal2);
-  }
+
   // Set the array of cards before render them
   componentDidMount() {
     this.setState({
       initCardsArray: [
-        { id: 1, value: "building", face: false },
-        { id: 2, value: "coctail", face: false },
-        { id: 3, value: "red-carp", face: false },
-        { id: 4, value: "buddha", face: false },
-        { id: 5, value: "tree", face: false },
-        { id: 6, value: "whale", face: false },
-        { id: 7, value: "building", face: false },
-        { id: 8, value: "coctail", face: false },
-        { id: 9, value: "buddha", face: false },
-        { id: 10, value: "red-carp", face: false },
-        { id: 11, value: "tree", face: false },
-        { id: 12, value: "whale", face: false },
+        { id: 1, value: "building", face: true },
+        { id: 2, value: "coctail", face: true },
+        { id: 3, value: "red-carp", face: true },
+        { id: 4, value: "buddha", face: true },
+        { id: 5, value: "tree", face: true },
+        { id: 6, value: "whale", face: true },
+        { id: 7, value: "building", face: true },
+        { id: 8, value: "coctail", face: true },
+        { id: 9, value: "buddha", face: true },
+        { id: 10, value: "red-carp", face: true },
+        { id: 11, value: "tree", face: true },
+        { id: 12, value: "whale", face: true },
       ],
     });
     this.state.initCardsArray.sort(() => Math.random() - 0.5);
@@ -94,12 +97,10 @@ class Main extends React.Component {
             return (
               <Card
                 key={card.id}
-                onClick={() => {
-                  this.handleCardClick(card.value);
-                  this.turnCard(card.face, card.id);
-                }}
+                id={card.id}
                 value={card.value}
                 face={card.face}
+                onClick={this.handleCardClick}
               />
             );
           })}
