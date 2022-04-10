@@ -1,13 +1,13 @@
 import styled, { css } from "styled-components";
 
-function Card(props) {
+function Card({face, id, value, onClick}) {
   return (
     <Content
-      face={props.face}
-      id={props.id}
-      value={props.value}
+      face={face}
+      id={id}
+      value={value}
       onClick={() => {
-        props.onClick(props.value, props.face, props.id);
+        onClick(value, face, id);
       }}
     ></Content>
   );

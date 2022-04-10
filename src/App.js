@@ -5,18 +5,18 @@ import Header from "./components/Header";
 
 function App() {
   const initCardsArr = [
-    { id: 1, value: "building", face: true },
-    { id: 2, value: "coctail", face: true },
-    { id: 3, value: "red-carp", face: true },
-    { id: 4, value: "buddha", face: true },
-    { id: 5, value: "tree", face: true },
-    { id: 6, value: "whale", face: true },
-    { id: 7, value: "building", face: true },
-    { id: 8, value: "coctail", face: true },
-    { id: 9, value: "buddha", face: true },
-    { id: 10, value: "red-carp", face: true },
-    { id: 11, value: "tree", face: true },
-    { id: 12, value: "whale", face: true },
+    { id: 1, value: "building", face: false },
+    { id: 2, value: "coctail", face: false },
+    { id: 3, value: "red-carp", face: false },
+    { id: 4, value: "buddha", face: false },
+    { id: 5, value: "tree", face: false },
+    { id: 6, value: "whale", face: false },
+    { id: 7, value: "building", face: false },
+    { id: 8, value: "coctail", face: false },
+    { id: 9, value: "buddha", face: false },
+    { id: 10, value: "red-carp", face: false },
+    { id: 11, value: "tree", face: false },
+    { id: 12, value: "whale", face: false },
   ];
   const [cards, setCards] = useState();
   useEffect(() => {
@@ -27,7 +27,7 @@ function App() {
   return (
     <>
       <Header />
-      {cards && <Main cards={cards} />}
+      {cards && <Main cards={cards} setCards={setCards} />}
     </>
   );
 }

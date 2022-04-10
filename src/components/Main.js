@@ -4,8 +4,7 @@ import styled from "styled-components";
 // Components
 import Card from "./Card";
 
-function Main({cards}) {
-  
+function Main({ cards, setCards }) {
   const [currVal1, setCurrVal1] = useState("");
   const [currVal2, setCurrVal2] = useState("");
   const [matchedCards, setMatchedCards] = useState(0);
@@ -20,28 +19,31 @@ function Main({cards}) {
     turnCard(face, id);
     compareCards(id);
   };
+  // timer for turning card 
+  let turnCardTimer;
   // turn over the card if it's not already turned
   const turnCard = (cardFace, id) => {
     if (!cardFace) {
-      let cards = cards.map((card) => {
+      let newCards = cards.map((card) => {
         if (card.id === id) {
           return { ...card, face: true };
         } else {
           return card;
         }
       });
-      // setInitCards(cards);
+      setCards(newCards);
+
       // turn card back after 1500ms
-      // this.turnCardTimer = setTimeout(() => {
-      //   let cards = this.state.initCardsArray.map((card) => {
-      //     if (card.id === id) {
-      //       return { ...card, face: false };
-      //     } else {
-      //       return card;
-      //     }
-      //   });
-      //   this.setState({ initCardsArray: cards });
-      // }, 1500);
+      turnCardTimer = setTimeout(() => {
+        newCards = cards.map((card) => {
+          if (card.id === id) {
+            return { ...card, face: false };
+          } else {
+            return card;
+          }
+        });
+        setCards(cards);
+      }, 1500);
     }
   };
   // if cards values match increase number of matched cards and return the state values back to ""
@@ -58,8 +60,6 @@ function Main({cards}) {
     setCurrVal1("");
     setCurrVal2("");
   };
-
-  
 
   return (
     <Container>
