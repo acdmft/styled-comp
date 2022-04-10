@@ -1,19 +1,16 @@
-import React from "react";
 import styled, { css } from "styled-components";
 
-class Card extends React.Component {
-  render() {
-    return (
-      <Content
-        face={this.props.face}
-        id={this.props.id}
-        value={this.props.value}
-        onClick={() => {
-          this.props.onClick(this.props.value, this.props.face, this.props.id);
-        }}
-      ></Content>
-    );
-  }
+function Card(props) {
+  return (
+    <Content
+      face={props.face}
+      id={props.id}
+      value={props.value}
+      onClick={() => {
+        props.onClick(props.value, props.face, props.id);
+      }}
+    ></Content>
+  );
 }
 
 // STYLES
