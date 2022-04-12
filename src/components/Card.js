@@ -1,6 +1,23 @@
+import React from "react";
 import styled, { css } from "styled-components";
+// images
+import buddha from "../images/buddha.jpg";
+import coctail from "../images/coctail.jpg";
+import redcarp from "../images/red-carp.jpg";
+import tree from "../images/tree.jpg";
+import whale from "../images/whale.jpg";
+import building from "../images/building.jpg";
+import stars from "../images/stars.jpg";
 
-function Card({face, id, value, onClick}) {
+function Card({ face, id, value, onClick }) {
+  const images = {
+    buddha: buddha,
+    coctail: coctail,
+    redcarp: redcarp,
+    tree: tree,
+    whale: whale,
+    building: building,
+  };
   return (
     <Content
       face={face}
@@ -9,7 +26,13 @@ function Card({face, id, value, onClick}) {
       onClick={() => {
         onClick(value, face, id);
       }}
-    ></Content>
+    >
+      {face ? (
+        <img src={images[value]} alt={value} />
+      ) : (
+        <img src={stars} alt={"back side"} />
+      )}
+    </Content>
   );
 }
 
@@ -20,21 +43,13 @@ const Content = styled.div`
   height: 6rem;
   border: 2px solid black;
   margin: 0.7rem 0.1rem 0 0;
-  ${(props) => {
-    if (props.face) {
-      return css`
-        background-image: url(${({ value }) => {
-          return `/images/${value}.jpg`;
-        }});
-      `;
-    } else {
-      return css`
-        background-image: url("/images/stars.jpg");
-      `;
-    }
-  }}
-  background-color: grey;
+  overflow: hidden;
   background-size: 4.5rem 6rem;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+
   @media (min-width: 375px) {
     width: 5.5rem;
     height: 7.3rem;
